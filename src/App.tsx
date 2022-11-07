@@ -1,6 +1,6 @@
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React, { useEffect } from 'react';
-import './App.css';
+import { FixedSizeList as List } from 'react-window';
 import { DATA } from "./data";
 import Row from './Row';
 import { useSelection } from './useSelection';
@@ -10,27 +10,32 @@ function App() {
 
   useEffect(() => {
     setReference(DATA.map(d => d.id));
-  }, [setReference])
+  }, [])
+
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <td><Checkbox {...bulkCheckboxProps} /></td>
-          <th>first name</th>
-          <th>last name</th>
-          <th>email</th>
-        </tr>
-      </thead>
-      <tbody>
-        {DATA.map((data, index) => {
-          const { checked, onChange } = checkBoxProps(index);
+    <div>
+      <div>
+        <span className='checkbox'><Checkbox {...bulkCheckboxProps} /></span>
+        <span className='name'>first name</span>
+        <span className='name'>last name</span>
+        <span className='email'>email</span>
+      </div>
+      <List
+        height={300}
+        itemCount={DATA.length}
+        itemSize={20}
+        width={1000}
+      >
+        {({ index, style }) => {
+          const { id, ...item } = DATA[index];
+          const { checked, onChange } = checkBoxProps(id);
           return (
-            <Row key={index} {...data} checkboxProps={{ checked, onChange }} />
+            <Row key={index} {...item} checkboxProps={{ checked, onChange }} style={style} />
           )
-        })}
-      </tbody>
-    </table>
+        }}
+      </List>
+    </div>
   );
 }
 

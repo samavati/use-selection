@@ -6,17 +6,17 @@ type RowProps = {
     first_name: string,
     last_name: string,
     email: string,
-    checkboxProps: CheckboxProps
-}
+    checkboxProps: CheckboxProps,
+} & React.HTMLProps<HTMLDivElement>
 
-const Row: React.FC<RowProps> = ({ first_name, last_name, email, checkboxProps }) => {
+const Row: React.FC<RowProps> = ({ first_name, last_name, email, checkboxProps, ...props }) => {
     return (
-        <tr>
-            <td><Checkbox {...checkboxProps} /></td>
-            <td>{first_name}</td>
-            <td>{last_name}</td>
-            <td>{email}</td>
-        </tr>
+        <div {...props}>
+            <span className='checkbox'><Checkbox {...checkboxProps} /></span>
+            <span className='name'>{first_name}</span>
+            <span className='name'>{last_name}</span>
+            <span className='email'>{email}</span>
+        </div>
     );
 }
 
