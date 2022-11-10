@@ -22,7 +22,7 @@ function App() {
         <span className='email'>email</span>
       </div>
       <List
-        height={300}
+        height={20000}
         itemCount={DATA.length}
         itemSize={20}
         width={1000}
